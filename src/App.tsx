@@ -1,26 +1,21 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { FC } from 'react';
+import './App.less';
+import PageHeader from './components/pageHeader'
+import { Routes, Route } from "react-router-dom"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const HomePage = React.lazy(() => import('./views/HomePage'))
+const EditPage = React.lazy(() => import('./views/EditPage'))
+
+const App: FC = () => (
+  <div className="App">
+    <PageHeader />
+    <React.Suspense fallback={<div>loading...</div>}>
+      <Routes>
+        <Route path="/" element={<HomePage />}></Route>
+        <Route path="/edit" element={<EditPage />}></Route>
+      </Routes>
+    </React.Suspense>
+  </div>
+);
 
 export default App;
